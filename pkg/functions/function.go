@@ -63,7 +63,7 @@ type Function struct {
 	//   alice/my.function.name
 	// If Image is provided, it overrides the default of concatenating
 	// "Registry+Name:latest" to derive the Image.
-	Image string `yaml:"image"`
+	Image string `yaml:"image,omitempty"`
 
 	// SHA256 hash of the latest image that has been built
 	ImageDigest string `yaml:"imageDigest,omitempty"`
