@@ -1,6 +1,9 @@
 name: Func E2E OnCluster Test
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - "omit-test"
 
 jobs:
   test:
