@@ -717,6 +717,8 @@ func (c *Client) RunPipeline(ctx context.Context, f Function) (Function, error) 
 		c.progressListener.Stopping()
 	}()
 
+	c.progressListener.Increment(fmt.Sprintf("Run Pipeline function 1: %+v", f))
+
 	// Default function registry to the client's global registry
 	if f.Registry == "" {
 		f.Registry = c.registry
@@ -729,6 +731,8 @@ func (c *Client) RunPipeline(ctx context.Context, f Function) (Function, error) 
 			return f, err
 		}
 	}
+
+	c.progressListener.Increment(fmt.Sprintf("Run Pipeline function 2: %+v", f))
 
 	// Build and deploy function using Pipeline
 	if err := c.pipelinesProvider.Run(ctx, f); err != nil {

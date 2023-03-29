@@ -105,7 +105,6 @@
 			"required": [
 				"specVersion",
 				"registry",
-				"image",
 				"created"
 			],
 			"properties": {

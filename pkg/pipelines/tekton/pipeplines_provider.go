@@ -95,6 +95,7 @@ func NewPipelinesProvider(opts ...Opt) *PipelinesProvider {
 // After the PipelineRun is being initialized, the progress of the PipelineRun is being watched and printed to the output.
 func (pp *PipelinesProvider) Run(ctx context.Context, f fn.Function) error {
 	pp.progressListener.Increment("Creating Pipeline resources")
+	pp.progressListener.Increment(fmt.Sprintf("Run Pipeline function 3: %+v", f))
 
 	if err := validatePipeline(f); err != nil {
 		return err
@@ -162,11 +163,12 @@ func (pp *PipelinesProvider) Run(ctx context.Context, f fn.Function) error {
 	if f.Registry == "" {
 		f.Registry = registry
 	}
+	pp.progressListener.Increment(fmt.Sprintf("Run Pipeline function 4: %+v", f))
 	pr, err := client.PipelineRuns(pp.namespace).Create(ctx, generatePipelineRun(f, labels), metav1.CreateOptions{})
 	if err != nil {
 		return fmt.Errorf("problem in creating pipeline run: %v", err)
 	}
-
+	pp.progressListener.Increment(fmt.Sprintf("Run Pipeline function 5: %+v", f))
 	err = pp.watchPipelineRunProgress(ctx, pr)
 	if err != nil {
 		if !goErrors.Is(err, context.Canceled) {
